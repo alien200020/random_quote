@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<style>
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,500);
+
+body {
+  background-color: black;
+  box-sizing: border-box;
+}
+
+.box {
+  width: 450px;
+  height: 450px;
+  background-color: white;
+  border-radius: 50%;
+  margin: auto;
+  margin-top: 5%;
+  padding: 10px;
+  position: relative;
+  box-shadow: 0px 0px 5px 10px #919090;
+}
+
+.quotebox {
+  margin-top: 60px;
+}
+
+#quote {
+  color: black;
+  font-size: 14px;
+  text-align: center;  
+  font-family: 'Raleway', sans-serif;
+  padding-top: 20%;
+}
+#author {
+  text-align: right;
+  font-family: 'Raleway', sans-serif;
+}
+
+.btn {
+  width: 100px;
+  height: 100px;
+  font-size: 25px;
+  font-family: 'Raleway', sans-serif;
+  border-radius: 50%;
+  position: absolute;
+  left: 110%;
+  top: 300px;
+  background-color:#333;
+  color:#fff;
+  cursor: pointer;
+}
+
+.btn:hover {
+    opacity: 0.5;
+  }
+.twitter {
+  background-color: transparent;
+  position: absolute;
+  right: 30px;
+  bottom: 150px;
+
+} 
+.twitter:hover {
+  cursor: pointer;
+}  
+
+.footer {
+  color: pink;
+  position: absolute;
+  left: -30px;
+  bottom: 10px;
+}  
+</style>
+
+
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous">
+  </script>
+<script>
+  $(document).ready(function() {
+
+    var quote;
+    var author;
+
+    function getNewQuote() {
+      $.ajax({
+        url: 'http://api.forismatic.com/api/1.0/',
+        jsonp: 'jsonp',
+        dataType: 'jsonp',
+        data: {
+          method: 'getQuote',
+          lang: 'en',
+          format: 'jsonp'
+        },
+        success: function(response) {
+          $('#quote').text(response.quoteText);
+          quote = response.quoteText;
+          author = response.quoteAuthor;
+          if (author) {
+            $('#author').text('said by ' + author);
+          } else {
+            $('#author').text('--unknown');
+          }
+        }
+      });
+    }
+    getNewQuote();
+
+    $('.btn').on('click', function() {
+      getNewQuote(); 
+    });
+
+    $('.twitter').on('click', function(event) {
+       event.preventDefault();
+       window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(quote + ' --said by ' + author))
+    });
+
+  });
+
+
+
+</script>
+<body>
+
+  <div class="box">
+    <div class="quotebox"><h1 id="quote"></h1></div>
+    <h6 id="author"></h6>
+    <div>
+    <button class="btn" id="newQuote">Next
+    </button>  
+  </div>
+  <div class="twitter">
+    <a><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+    </a>
+  </div>
+  <div class="footer"><h6>written by Joice</h6></div>
+  </div>
+  
+  
+  
+</body>  
+</html>

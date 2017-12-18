@@ -31,10 +31,14 @@ body {
   text-align: center;  
   font-family: 'Raleway', sans-serif;
   padding-top: 20%;
+  padding-left: 20px;
+  padding-right: 20px;
+  
 }
 #author {
   text-align: right;
   font-family: 'Raleway', sans-serif;
+  
 }
 
 .btn {
@@ -111,6 +115,17 @@ body {
 
     $('.btn').on('click', function() {
       getNewQuote(); 
+    });
+
+    $('.btn').on('click', function() {
+      $('#quote').animate({opacity: '0'}, function() {
+          $(this).animate({opacity: '1'}, "slow");
+      });
+    });
+    $('.btn').on('click', function() {
+      $('#author').animate({opacity: '0'}, function() {
+          $(this).animate({opacity: '1'}, "slow");
+      });
     });
 
     $('.twitter').on('click', function(event) {
